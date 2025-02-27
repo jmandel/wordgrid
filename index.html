@@ -57,15 +57,15 @@
         
         .letter {
             position: absolute;
-            width: 56px;
-            height: 56px;
+            width: 42px; /* Reduced from 56px */
+            height: 42px; /* Reduced from 56px */
             border-radius: 50%;
             background-color: #3498db;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 20px; /* Reduced from 26px */
             font-weight: bold;
             user-select: none;
             cursor: pointer;
@@ -1670,11 +1670,19 @@
                     const isPortrait = window.matchMedia('(orientation: portrait)').matches;
                     const isMobile = window.innerWidth <= 500;
                     
-                    const letterSize = isMobile || isPortrait ? 40 : 50;
-                    const radius = Math.min(centerX, centerY) - (letterSize * 0.7);
+                    // Smaller letter size to ensure proper spacing
+                    const letterSize = isMobile || isPortrait ? 36 : 42; // Reduced from 40/50
                     
-                    // Place all letters in a circle
+                    // Calculate spacing between circles
                     const letterCount = this.letters.length;
+                    const circleCircumference = 2 * Math.PI * Math.min(centerX, centerY) * 0.85;
+                    const spacingNeeded = letterCount * (letterSize + 5); // 5px minimum spacing
+                    
+                    // If needed, shrink letter size to ensure minimum spacing
+                    const adjustedLetterSize = Math.min(letterSize, (circleCircumference / letterCount) - 5);
+                    
+                    // Calculate radius with the adjusted size
+                    const radius = Math.min(centerX, centerY) - (adjustedLetterSize * 0.8);
                     
                     for (let i = 0; i < letterCount; i++) {
                         // Calculate position - start at the top (270 degrees) and go clockwise
@@ -1688,13 +1696,13 @@
                         letterElement.dataset.index = i;
                         letterElement.dataset.letter = this.letters[i];
                         
-                        // Set letter size
-                        letterElement.style.width = `${letterSize}px`;
-                        letterElement.style.height = `${letterSize}px`;
-                        letterElement.style.fontSize = `${letterSize * 0.45}px`;
+                        // Set letter size using the adjusted size for better spacing
+                        letterElement.style.width = `${adjustedLetterSize}px`;
+                        letterElement.style.height = `${adjustedLetterSize}px`;
+                        letterElement.style.fontSize = `${adjustedLetterSize * 0.45}px`;
                         
-                        letterElement.style.left = `${x - (letterSize/2)}px`;
-                        letterElement.style.top = `${y - (letterSize/2)}px`;
+                        letterElement.style.left = `${x - (adjustedLetterSize/2)}px`;
+                        letterElement.style.top = `${y - (adjustedLetterSize/2)}px`;
                         
                         // Add click handler
                         letterElement.addEventListener('click', this.handleLetterClick);
