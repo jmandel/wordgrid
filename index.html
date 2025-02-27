@@ -11,106 +11,61 @@
             padding: 0;
             background-color: #f7f9fc;
             color: #333;
-            min-height: 100vh;
-            min-height: 100dvh; /* Using dynamic viewport height to account for URL bar */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
         
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
+        /* Removed h1 and subtitle styles to save space */
         
         .game-container {
             display: flex;
             flex-direction: column;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            gap: 20px;
-            padding: 0 10px;
-            height: 100%;
+            gap: 2px; /* Reduced gap */
+            min-height: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         .game-content {
-            display: flex;
-            flex-direction: row;
+            display: grid;
             width: 100%;
-            gap: 30px;
+            gap: 5px;
+            min-height: 0;
+            box-sizing: border-box;
         }
         
         .wheel-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .grid-section {
-            flex: 1.5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-        }
-        
-        .loading-spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1.5s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .word-wheel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            overflow: visible;
+            min-height: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         .wheel-container {
             position: relative;
-            width: 220px;
-            height: 220px;
-            margin-bottom: 20px;
+            margin: 0 auto;
+            width: min(280px, 60vw);  
+            height: min(280px, 60vw);
             touch-action: none;
+            box-sizing: border-box;
         }
         
         .letter {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background-color: #3498db;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             user-select: none;
             cursor: pointer;
@@ -126,20 +81,22 @@
         
         .current-word {
             font-size: 28px;
-            margin: 15px 0;
-            height: 40px;
-            min-width: 220px;
+            margin: 2px 0;
+            height: 30px;
+            width: 100%;
             text-align: center;
             font-weight: bold;
             color: #2c3e50;
+            box-sizing: border-box;
         }
         
         .controls {
             display: flex;
-            gap: 10px;
-            margin: 10px 0 20px 0;
-            flex-wrap: wrap;
+            gap: 5px; /* Reduced from 10px */
+            margin: 8px 0;
+            flex-wrap: nowrap; /* Prevent wrapping by default */
             justify-content: center;
+            width: 100%;
         }
         
         button {
@@ -152,6 +109,9 @@
             cursor: pointer;
             transition: background-color 0.2s;
             font-weight: bold;
+            overflow: hidden; /* Prevent text overflow */
+            text-overflow: ellipsis; /* Add ellipsis for overflow */
+            white-space: nowrap; /* Keep text on one line */
         }
         
         button:hover {
@@ -165,7 +125,6 @@
         
         button#new-game-btn {
             background-color: #27ae60;
-            margin-top: 20px;
         }
         
         button#new-game-btn:hover {
@@ -189,8 +148,14 @@
         }
         
         .crossword-container {
-            margin-top: 10px;
+            margin: 0;
             position: relative;
+            overflow: visible;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
         }
         
         .crossword-grid {
@@ -198,7 +163,14 @@
             gap: 1px;
             margin: 0 auto;
             border: 2px solid #2c3e50;
-            background-color: #2c3e50; /* Grid background is dark */
+            background-color: #2c3e50;
+            max-width: 100%;
+            max-height: 100%;
+            transform-origin: center;
+            /* Add transform-box to ensure transforms are relative to content box */
+            transform-box: content-box;
+            /* Ensure there's no unexpected overflow */
+            box-sizing: border-box;
         }
         
         .crossword-cell {
@@ -274,15 +246,21 @@
             color: #7f8c8d;
         }
         
+        .words-found-container {
+            width: 100%;
+            order: 3;
+            margin-top: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            /* Remove overflow and max-height to allow natural page scrolling */
+            overflow: visible;
+        }
+        
         .words-found {
             width: 100%;
-            padding: 15px;
-            background-color: white;
-            border-radius: 4px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: visible;
+            padding: 0 10px;
         }
         
         .words-found h3 {
@@ -308,19 +286,29 @@
         }
         
         .message {
-            text-align: center;
-            margin: 15px 0;
+            position: fixed;
+            top: 10px;
+            right: 10px;
             font-weight: bold;
-            min-height: 24px;
+            min-height: 20px;
             font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 200px;
+            text-align: center;
         }
         
         .success {
             color: #27ae60;
+            border-left: 4px solid #27ae60;
         }
         
         .error {
             color: #e74c3c;
+            border-left: 4px solid #e74c3c;
         }
         
         /* Path for word selection */
@@ -334,108 +322,228 @@
             z-index: 10;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 800px) {
-            body {
-                padding: 0;
+        /* Portrait-specific layout */
+        @media (orientation: portrait) {
+            .game-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+                grid-template-areas: 
+                    "wheel"
+                    "grid";
+                width: 100%;
+                height: auto;
+                margin-bottom: 5px;
+                padding-top: 3px;
+                overflow: visible;
+                gap: 10px;
             }
             
-            .game-container {
+            .wheel-section {
+                grid-area: wheel;
                 padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
                 margin: 0;
+                /* Keep a compact height in portrait mode */
+                height: auto;
+                min-height: min-content;
+                max-height: 30vh; /* Reduced from 33vh */
+                box-sizing: border-box;
+            }
+            
+            .grid-section {
+                grid-area: grid;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: visible;
+                box-sizing: border-box;
+                padding: 0;
+                height: auto;
+                min-height: auto;
+                /* Limit max height to ensure enough space for words-found */
+                max-height: 60vh;
+            }
+            
+            .word-wheel {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
                 width: 100%;
                 max-width: 100%;
-                height: 100dvh;
-            }
-            
-            h1, .subtitle {
-                display: none;
-            }
-            
-            .game-content {
-                flex-direction: column-reverse;
-                height: 100%;
-                gap: 10px;
-                padding: 10px;
-            }
-            
-            .wheel-section, .grid-section {
-                width: 100%;
-            }
-            
-            .crossword-cell {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
+                padding: 0;
+                position: relative;
+                margin: 0 auto;
             }
             
             .wheel-container {
-                margin-top: 10px;
-            }
-            
-            .message {
-                margin: 5px 0;
-                min-height: 20px;
-                font-size: 16px;
-            }
-            
-            .words-found {
-                max-height: 150px;
-            }
-        }
-        
-        @media (max-width: 500px) {
-            .crossword-cell {
-                width: 30px;
-                height: 30px;
-                font-size: 16px;
+                margin: 0 auto;
+                width: min(240px, 60vw);
+                height: min(240px, 60vw);
+                position: relative;
             }
             
             .controls {
-                gap: 5px;
-                margin: 5px 0 10px 0;
-            }
-            
-            button {
-                padding: 8px 14px;
-                font-size: 14px;
-            }
-            
-            .wheel-container {
-                width: 200px;
-                height: 200px;
-                margin-bottom: 10px;
-            }
-            
-            .letter {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin: 10px 0;
+                height: auto;
+                gap: 10px;
+                justify-content: center;
+                width: 100%;
             }
             
             .current-word {
-                font-size: 24px;
-                margin: 10px 0;
-                height: 30px;
+                width: 100%;
+                text-align: center;
+                margin: 5px 0;
+                min-height: 30px;
+            }
+            
+            .crossword-container {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+            
+            .crossword-grid {
+                transform-origin: center;
+                margin: 0 auto;
+                max-width: 100%;
+                max-height: 60vh;
+                display: inline-grid;
+            }
+            
+            .words-found-container {
+                margin-top: 10px;
+                position: relative;
+                width: 100%;
+            }
+            
+            .words-found {
+                overflow-y: visible;
+                max-height: none;
             }
         }
         
-        @media (max-width: 380px) {
-            .crossword-cell {
-                width: 25px;
-                height: 25px;
-                font-size: 14px;
+        /* Landscape-specific layout */
+        @media (orientation: landscape) {
+            .game-content {
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto;
+                grid-template-areas: "wheel grid";
+                width: 100%;
+                height: auto;
+                min-height: 0;
+                max-height: 95vh;
+                padding: 0;
+                margin: 0;
+                overflow: visible;
+                gap: 20px;
+                align-items: center;
+            }
+            
+            .wheel-section {
+                grid-area: wheel;
+                width: auto;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+                min-height: min-content;
+                max-height: 90vh;
+                box-sizing: border-box;
+            }
+            
+            .grid-section {
+                grid-area: grid;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                overflow: visible;
+                height: auto;
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                /* Allow grid to take remaining width */
+                width: 100%;
+                max-height: 90vh;
             }
             
             .wheel-container {
-                width: 180px;
-                height: 180px;
+                width: min(220px, 20vw);
+                height: min(220px, 20vw);
+                margin: 0 auto;
+                max-height: 60vh;
+                aspect-ratio: 1/1;
             }
             
-            .letter {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
+            .word-wheel {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                display: flex;
+                gap: 10px;
+            }
+            
+            .controls {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: center;
+                margin: 5px 0;
+                width: 100%;
+                gap: 5px;
+                padding: 0;
+            }
+            
+            .controls button {
+                padding: 5px;
+                min-width: 40px;
+                max-width: 70px;
+                font-size: 12px;
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .crossword-container {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                max-height: 85vh;
+            }
+            
+            .crossword-grid {
+                transform-origin: center;
+                margin: 0 auto;
+                max-width: 100%;
+                max-height: 80vh;
+                display: inline-grid;
+            }
+            
+            .words-found-container {
+                width: 100%;
+                margin-top: 10px;
             }
         }
         
@@ -444,28 +552,138 @@
             color: #e74c3c;
             text-decoration: line-through;
         }
+        
+        /* Animation for found words */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebrating {
+            animation: celebrate 0.5s ease;
+        }
+        
+        /* Longest word celebration */
+        .longest-word-banner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .longest-word-banner.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .longest-word-info {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f5f6fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* Ensure the game section fits properly in viewport */
+        #game-section {
+            margin: 0;
+            padding: 2px 0 0 0; /* Reduced padding */
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            height: auto;
+            box-sizing: border-box;
+            /* Add border to create visual containment */
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .grid-section {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: 0;
+            position: relative;
+            overflow: visible;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        
+        .grid-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 5px auto 10px auto;
+            justify-content: center;
+            padding: 0;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+            /* Create a consistent container */
+            background-color: #f7f9fc;
+            border-top: 1px solid #e1e8ed;
+        }
+        
+        /* Ensure consistent button sizes in grid buttons */
+        .grid-buttons button {
+            min-width: 140px;
+            height: 44px;
+            padding: 10px 18px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        
+        .grid-buttons button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .grid-buttons button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
-    <h1>Word Wheel Crossword</h1>
-    <p class="subtitle">Draw a path through the wheel to create words and solve the crossword</p>
-    
     <div class="game-container">
         <div class="loading" id="loading" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Generating puzzle...</p>
         </div>
         
+        <div class="longest-word-banner" id="longest-word-banner">
+            <div>Congratulations!</div>
+            <div>You found the longest word!</div>
+            <div id="longest-word-text"></div>
+        </div>
+        
+        <div class="message" id="message"></div>
+        
         <div id="game-section">
-            <div class="message" id="message"></div>
-            
             <div class="game-content">
-                <div class="grid-section">
-                    <div class="crossword-container">
-                        <div class="crossword-grid" id="crossword-grid"></div>
-                    </div>
-                </div>
-                
                 <div class="wheel-section">
                     <div class="word-wheel">
                         <div class="wheel-container" id="wheel-container">
@@ -478,21 +696,32 @@
                             <button id="clear-btn">Clear</button>
                             <button id="shuffle-btn">Shuffle</button>
                             <button id="submit-btn">Submit</button>
-                            <button id="debug-btn">Debug View</button>
                         </div>
                     </div>
-                    
-                    <div class="words-found">
-                        <h3>Words Found: <span id="words-found-count">0</span>/<span id="total-words-count">0</span></h3>
-                        <h4>Valid Words</h4>
-                        <ul class="words-found-list" id="words-found-list"></ul>
-                        <h4>Invalid Attempts</h4>
-                        <ul class="words-found-list" id="invalid-words-list"></ul>
+                </div>
+                
+                <div class="grid-section">
+                    <div class="crossword-container">
+                        <div class="crossword-grid" id="crossword-grid"></div>
                     </div>
-                    
-                    <button id="new-game-btn">New Game</button>
                 </div>
             </div>
+            
+            <!-- Game controls moved inside the game section for better alignment -->
+            <div class="grid-buttons">
+                <button id="debug-btn">Show Answers</button>
+                <button id="new-game-btn">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="words-found-container">
+        <div class="words-found">
+            <h3>Words Found: <span id="words-found-count">0</span>/<span id="total-words-count">0</span></h3>
+            <h4>Valid Words</h4>
+            <ul class="words-found-list" id="words-found-list"></ul>
+            <h4>Invalid Attempts</h4>
+            <ul class="words-found-list" id="invalid-words-list"></ul>
         </div>
     </div>
 
@@ -580,6 +809,17 @@
                     this.dictionary = new Trie();
                     this.debugMode = false;
                     this.invalidAttempts = new Set();
+                    this.longestWord = ''; // Track the longest word
+                    this.longestWordFound = false; // Track if longest word has been found
+                    
+                    // Touch/mouse tracking for tap vs drag detection
+                    this.touchStartX = 0;
+                    this.touchStartY = 0;
+                    this.touchStartTime = 0;
+                    this.mouseStartX = 0;
+                    this.mouseStartY = 0;
+                    this.mouseStartTime = 0;
+                    this.hasMoved = false;
                 }
                 
                 bindMethods() {
@@ -605,6 +845,11 @@
                     this.displayMessage = this.displayMessage.bind(this);
                     this.updateSelectionPath = this.updateSelectionPath.bind(this);
                     this.toggleDebugView = this.toggleDebugView.bind(this);
+                    this.findLongestWord = this.findLongestWord.bind(this);
+                    this.celebrateLongestWord = this.celebrateLongestWord.bind(this);
+                    this.animateFoundWord = this.animateFoundWord.bind(this);
+                    this.adjustLayout = this.adjustLayout.bind(this);
+                    this.updateCrosswordForWord = this.updateCrosswordForWord.bind(this);
                 }
                 
                 setupDOMElements() {
@@ -614,7 +859,6 @@
                     this.submitBtn = document.getElementById('submit-btn');
                     this.clearBtn = document.getElementById('clear-btn');
                     this.shuffleBtn = document.getElementById('shuffle-btn');
-                    this.debugBtn = document.getElementById('debug-btn');
                     this.crosswordGridElement = document.getElementById('crossword-grid');
                     this.messageElement = document.getElementById('message');
                     this.wordsFoundList = document.getElementById('words-found-list');
@@ -624,6 +868,9 @@
                     this.loadingElement = document.getElementById('loading');
                     this.selectionPath = document.getElementById('path');
                     this.invalidWordsList = document.getElementById('invalid-words-list');
+                    this.longestWordBanner = document.getElementById('longest-word-banner');
+                    this.longestWordText = document.getElementById('longest-word-text');
+                    this.debugBtn = document.getElementById('debug-btn');
                 }
                 
                 setupEventListeners() {
@@ -638,6 +885,188 @@
                     if (this.wheelContainer) {
                         this.wheelContainer.addEventListener('touchstart', this.handleTouchStart, { passive: false });
                         this.wheelContainer.addEventListener('mousedown', this.handleMouseDown);
+                    }
+                    
+                    // Add resize and orientation change listeners to adjust layout
+                    window.addEventListener('resize', this.adjustLayout.bind(this));
+                    window.addEventListener('orientationchange', () => {
+                        // Multiple adjustments after orientation change to ensure proper rendering
+                        setTimeout(this.adjustLayout.bind(this), 50);
+                        setTimeout(this.adjustLayout.bind(this), 300);
+                        setTimeout(this.adjustLayout.bind(this), 600);
+                    });
+                    
+                    // Initial layout adjustment
+                    this.adjustLayout();
+                    
+                    // Use requestAnimationFrame for a more reliable layout adjustment
+                    this.adjustLayout();
+                    
+                    // For layout issues that might occur due to dynamic content loading
+                    window.addEventListener('load', this.adjustLayout.bind(this));
+                }
+                
+                adjustLayout() {
+                    // Create a reusable function that we can call via requestAnimationFrame
+                    const performLayout = () => this._doAdjustLayout();
+                    
+                    // Schedule the layout adjustment for the next animation frame
+                    requestAnimationFrame(performLayout);
+                }
+                
+                _doAdjustLayout() {
+                    const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+                    const isMobile = window.innerWidth <= 800;
+                    const viewportWidth = window.innerWidth;
+                    const viewportHeight = window.innerHeight;
+                    
+                    // Get the elements
+                    const gameContent = document.querySelector('.game-content');
+                    const wheelSection = document.querySelector('.wheel-section');
+                    const gridSection = document.querySelector('.grid-section');
+                    const crosswordGrid = document.getElementById('crossword-grid');
+                    const wordWheel = document.querySelector('.word-wheel');
+                    const wordsFoundContainer = document.querySelector('.words-found-container');
+                    
+                    if (!gameContent || !wheelSection || !gridSection) return;
+                    
+                    // Set height to auto to allow natural page scrolling
+                    document.querySelector('.game-container').style.height = 'auto';
+                    
+                    // Zero padding at the top to save space
+                    document.querySelector('#game-section').style.paddingTop = '0px';
+                    
+                    // Set layout based on orientation
+                    if (isPortrait) {
+                        // Portrait layout - let CSS grid handle the layout
+                        gameContent.style.gridTemplateAreas = '"wheel" "grid"';
+                        gameContent.style.gridTemplateColumns = '1fr';
+                        gameContent.style.gridTemplateRows = 'auto auto';
+                        
+                        // Wheel sizing - in portrait, use a smaller percentage of viewport height
+                        const maxWheelSize = Math.min(viewportWidth * 0.65, 260);
+                        const wheelSize = Math.min(maxWheelSize, viewportHeight * 0.22);
+                        
+                        if (this.wheelContainer) {
+                            this.wheelContainer.style.width = `${wheelSize}px`;
+                            this.wheelContainer.style.height = `${wheelSize}px`;
+                            this.wheelContainer.style.margin = '0 auto';
+                        }
+                        
+                        // Let CSS handle the grid section
+                        if (wordsFoundContainer) {
+                            wordsFoundContainer.style.maxHeight = '';
+                            wordsFoundContainer.style.overflowY = 'visible';
+                        }
+                        
+                    } else {
+                        // Landscape layout - let CSS grid handle the layout
+                        gameContent.style.gridTemplateAreas = '"wheel grid"';
+                        gameContent.style.gridTemplateColumns = 'auto 1fr';
+                        gameContent.style.gridTemplateRows = 'auto';
+                        
+                        // Calculate available height
+                        const availableHeight = Math.min(viewportHeight * 0.8, 500);
+                        
+                        // In landscape, optimize wheel size for available height
+                        const maxWheelSize = Math.min(viewportHeight * 0.45, 220);
+                        // Calculate wheel size for landscape
+                        const wheelSize = Math.min(maxWheelSize, availableHeight * 0.8);
+                        
+                        if (this.wheelContainer) {
+                            this.wheelContainer.style.width = `${wheelSize}px`;
+                            this.wheelContainer.style.height = `${wheelSize}px`;
+                            this.wheelContainer.style.margin = '0 auto';
+                        }
+                        
+                        // Let grid section adjust based on CSS grid layout
+                        if (wordsFoundContainer) {
+                            wordsFoundContainer.style.maxHeight = '20vh';
+                            wordsFoundContainer.style.overflowY = 'auto';
+                        }
+                    }
+                    
+                    // Adjust letter wheel when size changes
+                    this.renderLetterWheel();
+                    
+                    // Adjust grid cell size based on available space
+                    if (crosswordGrid && this.crosswordGrid && this.crosswordGrid.length > 0) {
+                        const gridWidth = this.crosswordGrid[0].length;
+                        const gridHeight = this.crosswordGrid.length;
+                        
+                        const gridSectionWidth = gridSection.clientWidth;
+                        // Use the full grid section height now that buttons are outside
+                        const gridSectionHeight = gridSection.clientHeight;
+                        
+                        // Add extra safety margins for calculation
+                        const safetyMarginWidth = isPortrait ? 30 : 20;
+                        const safetyMarginHeight = isPortrait ? 30 : 20;
+                        
+                        // Calculate max cell size that will fit with extra margins
+                        const maxCellWidth = Math.floor((gridSectionWidth - safetyMarginWidth) / gridWidth);
+                        const maxCellHeight = Math.floor((gridSectionHeight - safetyMarginHeight) / gridHeight);
+                        
+                        // Calculate initial cell size based on available space
+                        let cellSize = Math.min(maxCellWidth, maxCellHeight, 40); // Max of 40px
+                        
+                        // Ensure minimum cell size for usability
+                        cellSize = Math.max(cellSize, 20);
+                        
+                        // For very large grids, adjust cell size directly to maintain proportions
+                        if (gridWidth > 15 || gridHeight > 15) {
+                            // Larger reduction for very large grids
+                            cellSize = Math.max(Math.floor(cellSize * 0.85), 20);
+                        }
+                        
+                        // Apply cell size to all cells
+                        const cells = crosswordGrid.querySelectorAll('.crossword-cell');
+                        cells.forEach(cell => {
+                            cell.style.width = `${cellSize}px`;
+                            cell.style.height = `${cellSize}px`;
+                            cell.style.fontSize = `${Math.max(cellSize * 0.55, 14)}px`;
+                        });
+                        
+                        // Update grid template
+                        crosswordGrid.style.gridTemplateColumns = `repeat(${gridWidth}, ${cellSize}px)`;
+                        crosswordGrid.style.gridTemplateRows = `repeat(${gridHeight}, ${cellSize}px)`;
+                        
+                        // Calculate aspect ratio of the grid
+                        const gridAspectRatio = gridWidth / gridHeight;
+                        
+                        // Calculate natural grid size based on cell size
+                        const naturalGridWidth = cellSize * gridWidth;
+                        const naturalGridHeight = cellSize * gridHeight;
+                        
+                        // Determine available space
+                        // In portrait mode, ensure we leave room for the wheel
+                        const maxAvailableWidth = gridSectionWidth * 0.95; // 5% margin
+                        const maxAvailableHeight = isPortrait ? 
+                            Math.min(viewportHeight * 0.65, gridSectionHeight) * 0.95 : // In portrait
+                            gridSectionHeight * 0.95; // In landscape
+                        
+                        // Calculate potential scales based on width and height constraints
+                        const scaleX = maxAvailableWidth / naturalGridWidth;
+                        const scaleY = maxAvailableHeight / naturalGridHeight;
+                        
+                        // Pick the limiting dimension (the smaller scale)
+                        // Never scale up (limit to 1.0)
+                        let scale = Math.min(scaleX, scaleY, 1.0);
+                        
+                        // Apply a reasonable minimum size (never go below 35% of original)
+                        const minScale = 0.35;
+                        scale = Math.max(scale, minScale);
+                        
+                        // For very wide or tall grids, apply a reasonable adjustment factor
+                        // but don't iteratively reduce multiple times
+                        if (gridWidth > 12 || gridHeight > 12) {
+                            scale *= 0.9; // Single 10% reduction for large grids
+                        }
+                        
+                        // Always apply scaling, regardless of whether we think it fits
+                        crosswordGrid.style.transform = `scale(${scale})`;
+                        
+                        // Log grid dimensions for debugging
+                        console.log(`Grid dimensions: ${naturalGridWidth}x${naturalGridHeight}, Available: ${maxAvailableWidth}x${maxAvailableHeight}, Scale: ${scale}`);
                     }
                 }
                 
@@ -668,11 +1097,17 @@
                 }
                 
                 initGame() {
+                    // Store current scroll position
+                    const scrollY = window.scrollY;
+                    
                     // Only generate a puzzle if we have a dictionary loaded
                     if (this.dictionary.getAllWords().length === 0) {
                         console.error("No dictionary loaded. Cannot generate puzzle.");
                         return;
                     }
+                    
+                    // Reset scroll position to top for new game
+                    window.scrollTo(0, 0);
                     
                     // Show loading spinner
                     if (this.loadingElement) {
@@ -689,20 +1124,25 @@
                     if (this.messageElement) this.messageElement.textContent = '';
                     if (this.messageElement) this.messageElement.className = 'message';
                     
-                    // Generate puzzle asynchronously
+                    // Generate puzzle asynchronously with maximum attempts
                     setTimeout(() => {
                         try {
-                            this.selectLetters();
-                            this.findValidWords();
-                            this.generateCrossword();
+                            // Try to generate a valid grid (max 5 attempts)
+                            this.generateValidGrid(5);
+                            
+                            // Render the game elements
                             this.renderLetterWheel();
                             this.renderCrosswordGrid();
                             this.updateWordsList();
+                            this.adjustLayout(); // Adjust layout after rendering
                             
                             // Hide loading spinner
                             if (this.loadingElement) {
                                 this.loadingElement.style.display = 'none';
                             }
+                            
+                            // Use requestAnimationFrame for reliable layout adjustment
+                            this.adjustLayout();
                         } catch (error) {
                             console.error("Error generating puzzle:", error);
                             if (this.loadingElement) {
@@ -711,6 +1151,47 @@
                             alert("An error occurred while generating the puzzle. Please try again.");
                         }
                     }, 100);
+                }
+                
+                // New method to generate a valid grid that includes all possible words
+                generateValidGrid(maxAttempts) {
+                    console.log(`Attempting to generate a valid grid (max ${maxAttempts} attempts)...`);
+                    
+                    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                        console.log(`Grid generation attempt ${attempt}/${maxAttempts}`);
+                        
+                        // Select letters and find possible words
+                        this.selectLetters();
+                        this.findValidWords();
+                        
+                        // Keep track of the number of possible words
+                        const initialWordCount = this.allPossibleWords.length;
+                        console.log(`Found ${initialWordCount} possible words`);
+                        
+                        // Generate crossword grid
+                        this.generateCrossword();
+                        
+                        // Check if all words were placed in the grid
+                        const unplacedWords = this.allPossibleWords.filter(w => !this.placedWords.includes(w));
+                        const placementRatio = this.placedWords.length / initialWordCount;
+                        
+                        // Consider the grid valid if:
+                        // 1. All words were placed, or
+                        // 2. We placed at least 80% of the words and have at least 10 words in the grid
+                        if (unplacedWords.length === 0 || 
+                            (placementRatio >= 0.8 && this.placedWords.length >= 10)) {
+                            console.log(`✅ Generated a valid grid on attempt ${attempt}`);
+                            console.log(`  - Placed ${this.placedWords.length} out of ${initialWordCount} words (${Math.round(placementRatio*100)}%)`);
+                            return true; // Successfully generated a valid grid
+                        }
+                        
+                        console.log(`❌ Grid attempt ${attempt} rejected: placed only ${this.placedWords.length} out of ${initialWordCount} words (${Math.round(placementRatio*100)}%)`);
+                    }
+                    
+                    // If we've reached here, we've used all our attempts and still don't have a good grid
+                    // Just use the last generated grid as a fallback
+                    console.warn("Could not generate an optimal grid after maximum attempts. Using the last generated grid.");
+                    return false;
                 }
                 
                 selectLetters() {
@@ -748,7 +1229,7 @@
                     console.log("Starting valid word search...");
                     
                     // Check each dictionary word to see if it can be formed with our letters
-                    this.validWords = [];
+                    this.allPossibleWords = []; // Store all possible words from our letters
                     const allDictionaryWords = this.dictionary.getAllWords();
                     
                     // Debug: Count words by length
@@ -776,20 +1257,20 @@
                         }
                         
                         if (valid) {
-                            this.validWords.push(word);
+                            this.allPossibleWords.push(word);
                         }
                     }
                     
                     // Debug logging
                     console.log("Words found by length:", wordsByLength);
-                    console.log("Valid words found:", this.validWords.length);
-                    console.log("Valid words by length:", this.validWords.reduce((acc, word) => {
+                    console.log("Possible words found:", this.allPossibleWords.length);
+                    console.log("Possible words by length:", this.allPossibleWords.reduce((acc, word) => {
                         acc[word.length] = (acc[word.length] || 0) + 1;
                         return acc;
                     }, {}));
                     
                     // Make sure we have some words for the crossword
-                    if (this.validWords.length < 5) {
+                    if (this.allPossibleWords.length < 5) {
                         console.warn("Not enough valid words found! Reselecting letters.");
                         this.selectLetters();
                         this.findValidWords();
@@ -797,20 +1278,23 @@
                     }
                     
                     // Limit to 30 words maximum, prioritizing longer words
-                    if (this.validWords.length > 30) {
+                    if (this.allPossibleWords.length > 30) {
                         // Sort by length (descending) to prioritize longer words
-                        this.validWords.sort((a, b) => b.length - a.length);
+                        this.allPossibleWords.sort((a, b) => b.length - a.length);
                         
                         // Make sure we keep at least one 7-letter word if available
-                        const sevenLetterWord = this.validWords.find(w => w.length === 7);
-                        const otherWords = this.validWords.filter(w => w.length < 7);
+                        const sevenLetterWord = this.allPossibleWords.find(w => w.length === 7);
+                        const otherWords = this.allPossibleWords.filter(w => w.length < 7);
                         
                         // Take up to 29 other words (leaving room for the 7-letter word)
                         const selectedWords = otherWords.slice(0, 29);
                         
                         // Add the 7-letter word back if we found one
-                        this.validWords = sevenLetterWord ? [sevenLetterWord, ...selectedWords] : selectedWords;
+                        this.allPossibleWords = sevenLetterWord ? [sevenLetterWord, ...selectedWords] : selectedWords;
                     }
+                    
+                    // Note: we'll set validWords after generating the crossword
+                    // to ensure it only contains words that actually appear in the grid
                 }
                 
                 generateCrossword() {
@@ -828,7 +1312,7 @@
                     this.clues = [];
                     
                     // Sort words by length (descending)
-                    const sortedWords = [...this.validWords].sort((a, b) => b.length - a.length);
+                    const sortedWords = [...this.allPossibleWords].sort((a, b) => b.length - a.length);
                     if (sortedWords.length === 0) return;
                     
                     // Track grid bounds
@@ -956,6 +1440,18 @@
                     const trimMaxCol = Math.min(this.gridSize - 1, maxCol + padding);
                     
                     this.trimToGrid(trimMinRow, trimMaxRow, trimMinCol, trimMaxCol);
+                    
+                    // After placing words, find the longest word
+                    this.findLongestWord();
+                    
+                    // IMPORTANT: Set validWords to ONLY include words that were successfully 
+                    // placed in the grid
+                    this.validWords = [...this.placedWords];
+                    console.log("Valid words that appear in the grid:", this.validWords.length);
+                    
+                    // Log words that were originally valid but couldn't be placed
+                    const unplacedWords = this.allPossibleWords.filter(w => !this.placedWords.includes(w));
+                    console.log("Words that could be formed but not placed in grid:", unplacedWords);
                 }
                 
                 isValidPlacement(word, startRow, startCol, horizontal) {
@@ -1169,9 +1665,15 @@
                     const wheelRect = this.wheelContainer.getBoundingClientRect();
                     const centerX = wheelRect.width / 2;
                     const centerY = wheelRect.height / 2;
-                    const radius = Math.min(centerX, centerY) - 35; // Leave some margin for the letters
                     
-                    // Place all letters in a perfect circle with equal spacing
+                    // Adjust radius and letter size based on available space
+                    const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+                    const isMobile = window.innerWidth <= 500;
+                    
+                    const letterSize = isMobile || isPortrait ? 40 : 50;
+                    const radius = Math.min(centerX, centerY) - (letterSize * 0.7);
+                    
+                    // Place all letters in a circle
                     const letterCount = this.letters.length;
                     
                     for (let i = 0; i < letterCount; i++) {
@@ -1185,10 +1687,16 @@
                         letterElement.textContent = this.letters[i].toUpperCase();
                         letterElement.dataset.index = i;
                         letterElement.dataset.letter = this.letters[i];
-                        letterElement.style.left = `${x - 25}px`; // Half of letter width
-                        letterElement.style.top = `${y - 25}px`; // Half of letter height
                         
-                        // Add click handler for mouse users
+                        // Set letter size
+                        letterElement.style.width = `${letterSize}px`;
+                        letterElement.style.height = `${letterSize}px`;
+                        letterElement.style.fontSize = `${letterSize * 0.45}px`;
+                        
+                        letterElement.style.left = `${x - (letterSize/2)}px`;
+                        letterElement.style.top = `${y - (letterSize/2)}px`;
+                        
+                        // Add click handler
                         letterElement.addEventListener('click', this.handleLetterClick);
                         
                         this.letterElements.push({
@@ -1207,6 +1715,9 @@
                 
                 renderCrosswordGrid() {
                     if (!this.crosswordGridElement) return;
+                    
+                    // Store current scroll position before redrawing
+                    const scrollY = window.scrollY;
                     
                     this.crosswordGridElement.innerHTML = '';
                     
@@ -1227,6 +1738,12 @@
                     
                     // Keep track of cells that are part of words
                     const wordCells = new Set();
+                    // Also track which words each cell belongs to for later coloring
+                    const cellWords = {};
+                    
+                    // Track which cells have been found already
+                    const foundCells = new Set();
+                    
                     for (let i = 0; i < this.placedWords.length; i++) {
                         const { word, row, col, horizontal } = this.clues[i];
                         if (row < 0 || col < 0 || 
@@ -1234,13 +1751,35 @@
                             continue; // Skip words that are out of bounds
                         }
                         
+                        // Check if this word has been found
+                        const isFound = this.foundWords.includes(word);
+                        
                         for (let j = 0; j < word.length; j++) {
                             const cellRow = horizontal ? row : row + j;
                             const cellCol = horizontal ? col + j : col;
+                            const cellKey = `${cellRow},${cellCol}`;
                             
                             if (cellRow >= 0 && cellRow < gridHeight && 
                                 cellCol >= 0 && cellCol < gridWidth) {
-                                wordCells.add(`${cellRow},${cellCol}`);
+                                wordCells.add(cellKey);
+                                
+                                // Initialize the cell's word list if needed
+                                if (!cellWords[cellKey]) {
+                                    cellWords[cellKey] = [];
+                                }
+                                
+                                // Add this word to the cell's list of words
+                                cellWords[cellKey].push({
+                                    word: word,
+                                    index: i,
+                                    letterIndex: j,
+                                    isFound: isFound
+                                });
+                                
+                                // Mark cell as found if any of its words is found
+                                if (isFound) {
+                                    foundCells.add(cellKey);
+                                }
                             }
                         }
                     }
@@ -1262,8 +1801,11 @@
                                 if (cell && cell.letter) {
                                     cellElement.dataset.letter = cell.letter;
                                     
-                                    // If this cell was found/solved or we're in debug mode
-                                    if (this.debugMode) {
+                                    // If this cell is part of a found word or we're in debug mode
+                                    if (foundCells.has(key)) {
+                                        cellElement.textContent = cell.letter.toUpperCase();
+                                        cellElement.classList.add('correct');
+                                    } else if (this.debugMode) {
                                         cellElement.textContent = cell.letter.toUpperCase();
                                         cellElement.classList.add('debug');
                                     }
@@ -1285,12 +1827,17 @@
                         }
                     }
                     
-                    // Mark cells that have been correctly filled
+                    // Further ensure all found words are correctly marked
+                    console.log("Found words to render:", this.foundWords);
                     for (const word of this.foundWords) {
-                        const clue = this.clues.find(c => c.word === word);
+                        // Find the clue for this word (must account for case differences)
+                        const clue = this.clues.find(c => c.word.toLowerCase() === word.toLowerCase());
                         if (clue) {
                             const { row, col, horizontal } = clue;
+                            console.log(`Found word: "${word}" at (${row},${col}), horizontal: ${horizontal}`);
+                            
                             for (let i = 0; i < word.length; i++) {
+                                // If horizontal, increment column; if vertical, increment row
                                 const cellRow = horizontal ? row : row + i;
                                 const cellCol = horizontal ? col + i : col;
                                 const cellSelector = `.crossword-cell[data-row="${cellRow}"][data-col="${cellCol}"]`;
@@ -1300,10 +1847,30 @@
                                     cellElement.textContent = word[i].toUpperCase();
                                     cellElement.classList.remove('debug');
                                     cellElement.classList.add('correct');
+                                    console.log(`Updated cell for found word at (${cellRow},${cellCol}) with letter ${word[i].toUpperCase()}`);
+                                } else {
+                                    console.error(`Unable to find cell element for found word at (${cellRow},${cellCol})`);
                                 }
                             }
+                        } else {
+                            console.error(`Unable to find clue for found word: "${word}"`);
+                            // Log all clues and placed words to help debug
+                            console.log("Clues available:", this.clues.map(c => c.word));
+                            console.log("Placed words:", this.placedWords);
                         }
                     }
+                    
+                    // After rendering call adjustLayout to properly size cells
+                    this.adjustLayout();
+                    
+                    // Restore scroll position
+                    window.scrollTo(0, scrollY);
+                    
+                    // Additional layout adjustment after a short delay to ensure grid is properly scaled
+                    setTimeout(() => {
+                        this.adjustLayout();
+                        window.scrollTo(0, scrollY);
+                    }, 50);
                 }
                 
                 toggleDebugView() {
@@ -1311,7 +1878,7 @@
                     
                     // Toggle debug button text
                     if (this.debugBtn) {
-                        this.debugBtn.textContent = this.debugMode ? "Hide Answers" : "Debug View";
+                        this.debugBtn.textContent = this.debugMode ? "Hide Answers" : "Show Answers";
                     }
                     
                     // Re-render the grid with debug info
@@ -1412,42 +1979,51 @@
                 }
                 
                 handleLetterClick(e) {
+                    // Stop event propagation to prevent it from triggering the drag events
+                    e.stopPropagation();
+                    
                     const index = parseInt(e.target.dataset.index);
                     const letter = e.target.dataset.letter;
                     
-                    // Toggle selection
+                    // Don't select the same letter twice
                     if (this.selectedIndices.includes(index)) {
-                        // Already selected, deselect it (only if it's the last one)
-                        if (this.selectedIndices[this.selectedIndices.length - 1] === index) {
-                            this.selectedIndices.pop();
-                            e.target.classList.remove('selected');
-                            this.pathPoints.pop();
-                            this.updateSelectionPath();
-                            this.updateCurrentWord();
-                        }
-                    } else {
-                        // Not selected, add it
-                        this.selectedIndices.push(index);
-                        e.target.classList.add('selected');
-                        
-                        // Add to path
-                        const letterInfo = this.letterElements.find(item => item.index === index);
-                        if (letterInfo) {
-                            this.pathPoints.push({
-                                x: letterInfo.centerX,
-                                y: letterInfo.centerY
-                            });
-                            
-                            this.updateSelectionPath();
-                            this.updateCurrentWord();
-                        }
+                        return;
                     }
+                    
+                    // Add it to the current selection (accumulating letters)
+                    this.selectedIndices.push(index);
+                    e.target.classList.add('selected');
+                    
+                    // Add to path
+                    const letterInfo = this.letterElements.find(item => item.index === index);
+                    if (letterInfo) {
+                        this.pathPoints.push({
+                            x: letterInfo.centerX,
+                            y: letterInfo.centerY
+                        });
+                        
+                        this.updateSelectionPath();
+                        this.updateCurrentWord();
+                    }
+                    
+                    // Provide visual/haptic feedback for the tap
+                    e.target.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        if (e.target) e.target.style.transform = '';
+                    }, 100);
                 }
                 
                 handleTouchStart(e) {
                     e.preventDefault(); // Prevent scrolling
                     if (e.touches.length === 1) {
                         const touch = e.touches[0];
+                        
+                        // Store start position and time for differentiating taps vs drags
+                        this.touchStartX = touch.clientX;
+                        this.touchStartY = touch.clientY;
+                        this.touchStartTime = Date.now();
+                        this.hasMoved = false;
+                        
                         this.startDrag(touch.clientX, touch.clientY);
                         
                         document.addEventListener('touchmove', this.handleTouchMove, { passive: false });
@@ -1456,6 +2032,12 @@
                 }
                 
                 handleMouseDown(e) {
+                    // Store start position and time for differentiating clicks vs drags
+                    this.mouseStartX = e.clientX;
+                    this.mouseStartY = e.clientY;
+                    this.mouseStartTime = Date.now();
+                    this.hasMoved = false;
+                    
                     this.startDrag(e.clientX, e.clientY);
                     
                     document.addEventListener('mousemove', this.handleMouseMove);
@@ -1464,17 +2046,6 @@
                 
                 startDrag(clientX, clientY) {
                     this.isDragging = true;
-                    this.selectedIndices = [];
-                    this.currentWord = '';
-                    this.pathPoints = [];
-                    this.updateSelectionPath();
-                    
-                    // Reset all selected letters
-                    this.letterElements.forEach(info => {
-                        if (info.element) {
-                            info.element.classList.remove('selected');
-                        }
-                    });
                     
                     // Get wheel container position
                     if (!this.wheelContainer) return;
@@ -1493,6 +2064,16 @@
                         const touch = e.touches[0];
                         if (!this.wheelContainer) return;
                         
+                        // Mark that we've moved (to differentiate from taps)
+                        const moveDistance = Math.sqrt(
+                            Math.pow(touch.clientX - this.touchStartX, 2) + 
+                            Math.pow(touch.clientY - this.touchStartY, 2)
+                        );
+                        
+                        if (moveDistance > 10) {
+                            this.hasMoved = true;
+                        }
+                        
                         const rect = this.wheelContainer.getBoundingClientRect();
                         const x = touch.clientX - rect.left;
                         const y = touch.clientY - rect.top;
@@ -1504,6 +2085,16 @@
                 handleMouseMove(e) {
                     if (this.isDragging) {
                         if (!this.wheelContainer) return;
+                        
+                        // Mark that we've moved (to differentiate from clicks)
+                        const moveDistance = Math.sqrt(
+                            Math.pow(e.clientX - this.mouseStartX, 2) + 
+                            Math.pow(e.clientY - this.mouseStartY, 2)
+                        );
+                        
+                        if (moveDistance > 10) {
+                            this.hasMoved = true;
+                        }
                         
                         const rect = this.wheelContainer.getBoundingClientRect();
                         const x = e.clientX - rect.left;
@@ -1552,7 +2143,17 @@
                     document.removeEventListener('touchend', this.handleTouchEnd);
                     
                     if (this.isDragging) {
-                        this.endDrag();
+                        // Check if this was a tap or a drag
+                        const endTime = Date.now();
+                        const tapDuration = endTime - this.touchStartTime;
+                        
+                        if (!this.hasMoved && tapDuration < 200) {
+                            // This was a tap, not a drag - don't end the selection
+                            this.isDragging = false;
+                        } else {
+                            // This was a drag - end the selection
+                            this.endDrag();
+                        }
                     }
                 }
                 
@@ -1561,7 +2162,17 @@
                     document.removeEventListener('mouseup', this.handleMouseUp);
                     
                     if (this.isDragging) {
-                        this.endDrag();
+                        // Check if this was a click or a drag
+                        const endTime = Date.now();
+                        const clickDuration = endTime - this.mouseStartTime;
+                        
+                        if (!this.hasMoved && clickDuration < 200) {
+                            // This was a click, not a drag - don't end the selection
+                            this.isDragging = false;
+                        } else {
+                            // This was a drag - end the selection
+                            this.endDrag();
+                        }
                     }
                 }
                 
@@ -1572,7 +2183,11 @@
                     if (this.currentWord.length >= 3) {
                         this.submitWord();
                     } else {
-                        this.clearSelection();
+                        // Only clear if this was a true drag operation and not discrete clicks
+                        // Check if we have any points in our path
+                        if (this.pathPoints.length > 1 && this.hasMoved) {
+                            this.clearSelection();
+                        }
                     }
                 }
                 
@@ -1658,7 +2273,10 @@
                         return;
                     }
                     
-                    // Check if word is in our valid words list
+                    // Since we've enhanced grid generation to include all words,
+                    // A word that can be spelled from our letters should always be in the grid
+                    
+                    // Check if word is in our valid words list (words that are in the grid)
                     if (!this.validWords.includes(this.currentWord)) {
                         this.invalidAttempts.add(this.currentWord);
                         this.displayMessage('Not a valid word!', 'error');
@@ -1669,13 +2287,31 @@
                     
                     // Word is valid and new, add it to found words
                     this.foundWords.push(this.currentWord);
-                    this.displayMessage('Word found!', 'success');
+                    
+                    // Check if this is the longest word
+                    if (this.currentWord === this.longestWord && !this.longestWordFound) {
+                        this.celebrateLongestWord();
+                        this.longestWordFound = true;
+                    } else {
+                        this.displayMessage('Word found!', 'success');
+                    }
+                    
+                    // Get the current word before clearing the selection
+                    const wordToUpdate = this.currentWord;
                     
                     // Update the crossword grid with the new word
-                    this.updateCrosswordGrid();
+                    this.renderCrosswordGrid(); // Force a full redraw first
+                    
+                    // Then update the specific word cells
+                    setTimeout(() => {
+                        this.updateCrosswordForWord(wordToUpdate);
+                    }, 10);
                     
                     // Update the words list
                     this.updateWordsList();
+                    
+                    // Add celebration animation to the found word in the list
+                    this.animateFoundWord(wordToUpdate);
                     
                     // Clear the selection
                     this.clearSelection();
@@ -1684,9 +2320,64 @@
                     this.checkCompletion();
                 }
                 
+                updateCrosswordForWord(word) {
+                    // Find all cells in the crossword that correspond to the word
+                    let wordUpdated = false;
+                    const foundWord = word.toLowerCase();
+                    
+                    // First log the word we're trying to update for debugging
+                    console.log(`Updating grid for word: "${foundWord}"`);
+                    
+                    // Find the word in the placed words
+                    for (let i = 0; i < this.placedWords.length; i++) {
+                        const placedWord = this.placedWords[i];
+                        
+                        if (placedWord === foundWord) {
+                            const { row, col, horizontal } = this.clues[i];
+                            wordUpdated = true;
+                            
+                            console.log(`Found word in grid: "${placedWord}" at (${row},${col}), horizontal: ${horizontal}`);
+                            
+                            // Mark the cells for this word as correct
+                            for (let j = 0; j < placedWord.length; j++) {
+                                const cellRow = horizontal ? row : row + j;
+                                const cellCol = horizontal ? col + j : col;
+                                
+                                // Find the corresponding DOM element
+                                const cellSelector = `.crossword-cell[data-row="${cellRow}"][data-col="${cellCol}"]`;
+                                const cellElement = document.querySelector(cellSelector);
+                                
+                                if (cellElement) {
+                                    cellElement.textContent = placedWord[j].toUpperCase();
+                                    cellElement.classList.add('correct');
+                                    cellElement.classList.remove('debug');
+                                    console.log(`Updated cell at (${cellRow},${cellCol}) with letter ${placedWord[j].toUpperCase()}`);
+                                } else {
+                                    console.error(`Cell element not found at (${cellRow},${cellCol}) for letter ${placedWord[j]}`);
+                                }
+                            }
+                        }
+                    }
+                    
+                    // If the word wasn't found in the grid, display a message
+                    if (!wordUpdated) {
+                        console.error(`Word "${foundWord}" not found in grid placement`);
+                        
+                        // Dump the contents of placedWords for debugging
+                        console.log("All placed words:", this.placedWords);
+                        console.log("All clues:", this.clues);
+                    }
+                    
+                    // Force a layout adjustment to ensure the grid is properly updated
+                    this.adjustLayout();
+                }
+                
                 updateCrosswordGrid() {
                     // Find all cells in the crossword that correspond to the current word
                     let wordUpdated = false;
+                    
+                    // Store scroll position
+                    const scrollY = window.scrollY;
                     
                     for (let i = 0; i < this.placedWords.length; i++) {
                         const word = this.placedWords[i];
@@ -1717,6 +2408,12 @@
                     if (!wordUpdated) {
                         console.log(`Word "${this.currentWord}" not found in grid placement`);
                     }
+                    
+                    // Re-adjust layout after updating grid to ensure proper sizing
+                    this.adjustLayout();
+                    
+                    // Restore scroll position
+                    window.scrollTo(0, scrollY);
                 }
                 
                 updateWordsList() {
@@ -1733,7 +2430,29 @@
                     for (const word of sortedWords) {
                         const listItem = document.createElement('li');
                         listItem.textContent = word.toUpperCase();
+                        
+                        // Highlight the longest word if it's found
+                        if (word === this.longestWord) {
+                            listItem.style.backgroundColor = '#ffd700';
+                            listItem.style.color = '#333';
+                        }
+                        
                         this.wordsFoundList.appendChild(listItem);
+                    }
+                    
+                    // Add longest word info section if we have a longest word
+                    if (this.longestWord && this.wordsFoundList.parentNode) {
+                        let longestWordInfo = document.getElementById('longest-word-info');
+                        
+                        if (!longestWordInfo) {
+                            longestWordInfo = document.createElement('div');
+                            longestWordInfo.id = 'longest-word-info';
+                            longestWordInfo.className = 'longest-word-info';
+                            this.wordsFoundList.parentNode.insertBefore(longestWordInfo, this.wordsFoundList.nextSibling);
+                        }
+                        
+                        const foundStatus = this.longestWordFound ? '✓ Found!' : 'Not found yet';
+                        longestWordInfo.innerHTML = `Longest Word: ${this.longestWordFound ? this.longestWord.toUpperCase() : '???'} <span style="float:right">${foundStatus}</span>`;
                     }
                     
                     // Update invalid attempts list
@@ -1755,9 +2474,18 @@
                     
                     // Clear the message after a short time
                     setTimeout(() => {
-                        this.messageElement.textContent = '';
-                        this.messageElement.className = 'message';
-                    }, 2000);
+                        // Fade out effect
+                        this.messageElement.style.opacity = '0';
+                        this.messageElement.style.transition = 'opacity 0.5s';
+                        
+                        // Clear after fade
+                        setTimeout(() => {
+                            this.messageElement.textContent = '';
+                            this.messageElement.className = 'message';
+                            this.messageElement.style.opacity = '1';
+                            this.messageElement.style.transition = '';
+                        }, 500);
+                    }, 1500);
                 }
                 
                 checkCompletion() {
@@ -1779,6 +2507,54 @@
                         if (this.clearBtn) this.clearBtn.disabled = true;
                         if (this.shuffleBtn) this.shuffleBtn.disabled = true;
                     }
+                }
+                
+                findLongestWord() {
+                    this.longestWord = '';
+                    for (const word of this.placedWords) {
+                        if (word.length > this.longestWord.length) {
+                            this.longestWord = word;
+                        }
+                    }
+                    console.log(`Longest word in the puzzle: ${this.longestWord}`);
+                    this.longestWordFound = false;
+                }
+                
+                celebrateLongestWord() {
+                    if (!this.longestWordBanner || !this.longestWordText) return;
+                    
+                    // Set the longest word text
+                    this.longestWordText.textContent = this.longestWord.toUpperCase();
+                    
+                    // Show the banner
+                    this.longestWordBanner.classList.add('show');
+                    
+                    // Display special message
+                    this.displayMessage(`Amazing! You found the longest word: ${this.longestWord.toUpperCase()}!`, 'success');
+                    
+                    // Hide banner after a few seconds
+                    setTimeout(() => {
+                        this.longestWordBanner.classList.remove('show');
+                    }, 3000);
+                }
+                
+                animateFoundWord(word) {
+                    setTimeout(() => {
+                        // Find the list item for this word
+                        const listItems = this.wordsFoundList.querySelectorAll('li');
+                        for (const item of listItems) {
+                            if (item.textContent.toLowerCase() === word.toUpperCase()) {
+                                item.classList.add('celebrating');
+                                
+                                // Remove the class after animation completes
+                                setTimeout(() => {
+                                    item.classList.remove('celebrating');
+                                }, 500);
+                                
+                                break;
+                            }
+                        }
+                    }, 100); // Small delay to ensure the list is updated
                 }
             }
             
